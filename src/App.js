@@ -1,22 +1,31 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import {Provider} from 'react-redux';
 import {PersistGate} from 'redux-persist/integration/react';
+import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 
 import createStore from 'src/store';
-import 'src/App.css';
+import PrivateRoute from 'src/components/PrivateRoute';
 import LoginPage from 'src/containers/LoginPage';
+import ConsolePage from 'src/containers/ConsolePage';
 
 const {store, persistor} = createStore();
 
 function App() {
   return (
-    <Provider store={store}>
-      <PersistGate loading={null} persistor={persistor}>
-        <div>
-          <LoginPage />
-        </div>
-      </PersistGate>
-    </Provider>
+    <Router>
+      <Provider store={store}>
+        <PersistGate loading={null} persistor={persistor}>
+          <Switch>
+            <Route path="/login">
+              <LoginPage />
+            </Route>
+            <PrivateRoute path="/console">
+              <ConsolePage />
+            </PrivateRoute>
+          </Switch>
+        </PersistGate>
+      </Provider>
+    </Router>
   );
 }
 

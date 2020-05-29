@@ -7,7 +7,7 @@ function LoginPage() {
   const [login, setLogin] = useState('alfxyzdev@gmail.com');
   const [sublogin, setSubLogin] = useState('test');
   const [password, setPassword] = useState('Rmc$L>AwG(');
-  const isLoggedIn = useSelector((state) => state.auth.sessionKey?.length);
+  const isLoggedIn = useSelector((state) => !!state.auth.sessionKey?.length);
   const doLogin = () => {
     dispatch(
       authenticate({
