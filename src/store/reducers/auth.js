@@ -3,14 +3,14 @@ import {handleActions} from 'redux-actions';
 import {ActionTypes} from 'src/store/constants';
 
 export const loginState = {
-  loading: true,
+  loading: false,
   sessionKey: null,
 };
 
 export default {
   auth: handleActions(
     {
-      [ActionTypes.AUTHENTICATE]: (state, {payload}) => {
+      [ActionTypes.AUTHENTICATE]: (state) => {
         return {
           ...state,
           loading: true,
@@ -21,6 +21,13 @@ export default {
           ...state,
           loading: false,
           sessionKey: payload.sessionKey,
+        };
+      },
+      [ActionTypes.LOGOUT]: (state) => {
+        return {
+          ...state,
+          loading: false,
+          sessionKey: null,
         };
       },
     },
