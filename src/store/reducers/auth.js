@@ -5,6 +5,8 @@ import {ActionTypes} from 'src/store/constants';
 export const loginState = {
   loading: false,
   sessionKey: null,
+  login: null,
+  sublogin: null,
 };
 
 export default {
@@ -21,6 +23,8 @@ export default {
           ...state,
           loading: false,
           sessionKey: payload.sessionKey,
+          login: payload.login,
+          sublogin: payload.sublogin,
         };
       },
       [ActionTypes.LOGOUT]: (state) => {

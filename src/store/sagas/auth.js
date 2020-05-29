@@ -22,6 +22,8 @@ export function* authenticateSaga({payload}) {
   yield put(
     authenticateSuccess({
       sessionKey: api.sendsay.session,
+      login: payload.login,
+      sublogin: payload.sublogin,
     })
   );
 }

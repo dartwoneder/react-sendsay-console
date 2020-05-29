@@ -11,8 +11,14 @@ body {
   -moz-osx-font-smoothing: grayscale;
   background: #E5E5E5;
   height: 100%;
+  color: #0D0D0D;
 }
 
+nav ul{
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
 #root{
   height: 100%;
 }

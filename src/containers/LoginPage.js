@@ -4,7 +4,6 @@ import {withRouter} from 'react-router-dom';
 import styled from 'styled-components';
 
 import {authenticate} from 'src/store/actions/auth';
-import Logo from 'src/components/Logo';
 import LabeledInput from 'src/components/LabeledInput';
 import Button from 'src/components/Button';
 
@@ -27,7 +26,7 @@ const Form = styled.section`
   padding: 40px 30px;
 `;
 
-const LogoStyled = styled(Logo)`
+const LogoStyled = styled.img`
   margin-bottom: 20px;
 `;
 
@@ -63,7 +62,7 @@ function LoginPage({history}) {
 
   return (
     <Wrapper>
-      <LogoStyled />
+      <LogoStyled src="/icons/logo.svg" alt="" />
       <Form onSubmit={onSubmit} action="/">
         <LabeledInput value={login} onChange={(e) => setLogin(e.target.value)} label="Логин" />
         <LabeledInput value={sublogin} onChange={(e) => setSubLogin(e.target.value)} label="Сублогин" />
