@@ -42,10 +42,12 @@ const JSONEditorStyled = styled(JSONEditor)`
   }
 `;
 
-export default function EditorPane({label, disabled = false}) {
+export default function EditorPane({label, json, onChange, disabled = false}) {
   const [hasError, setHasError] = useState(false);
   const textInput = useRef();
-  const onChange = () => {
+  const onChangeText = (data) => {
+    console.log('data', data);
+    onChange(data);
     setHasError(false);
   };
   const onError = () => {
@@ -73,22 +75,13 @@ export default function EditorPane({label, disabled = false}) {
 
       <JSONEditorStyled
         ref={textInput}
-        value={{
-          the: 'men',
-          that: 'landed',
-          on: 'the',
-          moon: 'were',
-          maybe: 2,
-          i: 'think',
-          probably: ['neil armstrong', 'buzz aldrin'],
-          am_i_right: true,
-        }}
+        value={json}
         navigationBar={false}
         search={false}
         statusBar={false}
         mode="code"
         hasError={hasError}
-        onChange={onChange}
+        onChange={onChangeText}
         onError={onError}
       />
     </Wrap>
@@ -97,5 +90,7 @@ export default function EditorPane({label, disabled = false}) {
 
 EditorPane.propTypes = {
   label: PropTypes.string.isRequired,
+  json: PropTypes.object.isRequired,
+  onChange: PropTypes.func,
   disabled: PropTypes.bool,
 };

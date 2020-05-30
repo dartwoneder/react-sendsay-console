@@ -1,10 +1,12 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {useDispatch} from 'react-redux';
+import {Resizable} from 're-resizable';
 import styled from 'styled-components';
+
 import Footer from 'src/components/Footer';
 import Wrapper from 'src/components/Wrapper';
 import EditorPane from 'src/components/EditorPane';
-import {Resizable} from 're-resizable';
+import api from 'src/helpers/sendsay';
 
 const Wrap = styled.div`
   display: flex;
@@ -35,8 +37,14 @@ const ResizableRight = styled.div`
 
 export default function ConsolePage() {
   const dispatch = useDispatch();
+  const [requestBody, setRequestBody] = useState({action: 'track.get', id: '12345'});
 
-  const onSendRequest = () => {};
+  const onSendRequest = () => {
+    //sendsay.request({ action: 'sys.settings.get', list: ['about.id']}).then(function(res) {
+    api.sendsay.request(requestBody).then(function (res) {
+      console.log(res.list['about.id']);
+    });
+  };
 
   return (
     <Wrap>
@@ -65,13 +73,18 @@ export default function ConsolePage() {
           maxWidth="100%"
           minWidth="1"
         >
-          <EditorPane label="Запрос" />
+          <EditorPane label="Запрос" json={requestBody} onChange={setRequestBody} />
         </ResizableLeft>
         <ResizableRight>
-          <EditorPane label="Ответ" disabled />
+          <EditorPane label="Ответ" disabled json={requestBody} />
         </ResizableRight>
       </Content>
-      <Footer onSendRequest={onSendRequest}>footer</Footer>
+      <Footer
+        onFormat={() => {
+          console.log('onFormat');
+        }}
+        onSendRequest={onSendRequest}
+      />
     </Wrap>
   );
 }
