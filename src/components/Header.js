@@ -4,18 +4,21 @@ import {Link} from 'react-router-dom';
 import {useDispatch, useSelector} from 'react-redux';
 
 import {logout} from 'src/store/actions/auth';
+import Wrapper from 'src/components/Wrapper';
 
-const Wrap = styled.header`
+const HeaderStyled = styled.header`
   height: 50px;
   background: #f6f6f6;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+`;
+
+const WrapperStyled = styled(Wrapper)`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
-  padding: 0 15px;
 `;
 
-const HeaderInfo = styled.header`
+const HeaderInfo = styled.div`
   display: flex;
   align-items: center;
   font-size: 20px;
@@ -82,31 +85,33 @@ export default function Header() {
   const sublogin = useSelector((state) => state.auth.sublogin);
 
   return (
-    <Wrap>
-      <HeaderInfo>
-        <img src="/icons/logo.svg" alt="" />
-        API-консолька
-      </HeaderInfo>
-      <nav>
-        <NavList>
-          <li>
-            <UserInfoBtn>
-              {login}
-              <i />
-              {sublogin}
-            </UserInfoBtn>
-          </li>
-          <li onClick={doLogout}>
-            <LogoutBtn>
-              Выйти
-              <img src="/icons/log-out.svg" alt="" />
-            </LogoutBtn>
-          </li>
-          <li>
-            <FullScreenBtn src="/icons/full-screen.svg" alt="" />
-          </li>
-        </NavList>
-      </nav>
-    </Wrap>
+    <HeaderStyled>
+      <WrapperStyled>
+        <HeaderInfo>
+          <img src="/icons/logo.svg" alt="" />
+          API-консолька
+        </HeaderInfo>
+        <nav>
+          <NavList>
+            <li>
+              <UserInfoBtn>
+                {login}
+                <i />
+                {sublogin}
+              </UserInfoBtn>
+            </li>
+            <li onClick={doLogout}>
+              <LogoutBtn>
+                Выйти
+                <img src="/icons/log-out.svg" alt="" />
+              </LogoutBtn>
+            </li>
+            <li>
+              <FullScreenBtn src="/icons/full-screen.svg" alt="" />
+            </li>
+          </NavList>
+        </nav>
+      </WrapperStyled>
+    </HeaderStyled>
   );
 }
