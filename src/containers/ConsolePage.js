@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {Resizable} from 're-resizable';
 import styled from 'styled-components';
@@ -38,10 +38,31 @@ const ResizableRight = styled.div`
 
 export default function ConsolePage() {
   const dispatch = useDispatch();
-  const [requestBody, setRequestBody] = useState({action: 'sys.settings.get', list: ['about.id']});
+  const defaultRequest = {
+    action: 'sys.settings.get',
+    list: ['about.id'],
+  };
+  const requests = useSelector((state) => {
+    console.log('state.requests.history', state.requests.history);
+    return state.requests.history;
+  });
 
-  const requests = useSelector((state) => state.requests.history);
-  const lastResponse = requests[0] || {response: {}};
+  let [format, setFormat] = useState(false);
+  let [lastResponse, setLastResponse] = useState(requests[0] || {response: {}, request: defaultRequest});
+
+  const [requestBody, setRequestBody] = useState(lastResponse.request);
+  const [responseBody, setResponseBody] = useState(lastResponse.response);
+
+  useEffect(() => {
+    if (requests.length) {
+      setLastResponse(requests[0]);
+    }
+  }, [requests]);
+
+  useEffect(() => {
+    setResponseBody(lastResponse.response);
+    setRequestBody(lastResponse.request);
+  }, [lastResponse]);
 
   const onSendRequest = () => {
     dispatch(requestSend(requestBody));
@@ -51,9 +72,16 @@ export default function ConsolePage() {
     dispatch(requestRemoveAll());
   };
 
-  const onRequestClick = (requests) => {
-    console.log('requests', requests);
+  const onRequestClick = (request) => {
+    setLastResponse(request);
   };
+
+  const onFormat = () => {
+    setFormat(true);
+    //event loop hack to return format back to false state and trigger formatting
+    setTimeout(() => setFormat(false), 0);
+  };
+  console.log('lastResponse', lastResponse);
 
   return (
     <Wrap>
@@ -83,18 +111,13 @@ export default function ConsolePage() {
           maxWidth="100%"
           minWidth="1"
         >
-          <EditorPane label="Запрос" json={requestBody} onChange={setRequestBody} hasError={false} />
+          <EditorPane label="Запрос" json={requestBody} onChange={setRequestBody} format={format} hasError={false} />
         </ResizableLeft>
         <ResizableRight>
-          <EditorPane label="Ответ" disabled json={lastResponse?.response} hasError={lastResponse?.error} />
+          <EditorPane label="Ответ" disabled json={responseBody} hasError={lastResponse?.error} />
         </ResizableRight>
       </Content>
-      <Footer
-        onFormat={() => {
-          console.log('onFormat');
-        }}
-        onSendRequest={onSendRequest}
-      />
+      <Footer onFormat={onFormat} onSendRequest={onSendRequest} />
     </Wrap>
   );
 }

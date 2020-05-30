@@ -42,11 +42,19 @@ const JSONEditorStyled = styled(JSONEditor)`
   }
 `;
 
-export default function EditorPane({label, json, onChange, hasError: hasErrorProp, disabled = false}) {
+export default function EditorPane({label, json, onChange, hasError: hasErrorProp, format, disabled = false}) {
   const [hasError, setHasError] = useState(hasErrorProp);
+  const [isTyping, setIsTyping] = useState(false);
   const textInput = useRef();
+  const onBlur = () => {
+    setIsTyping(false);
+    console.log('isTyping onBlur', isTyping);
+  };
+  const onFocus = () => {
+    setIsTyping(true);
+  };
   const onChangeText = (data) => {
-    console.log('data', data);
+    setIsTyping(true);
     onChange(data);
     setHasError(false);
   };
@@ -54,13 +62,16 @@ export default function EditorPane({label, json, onChange, hasError: hasErrorPro
     setHasError(true);
   };
 
-  const onFormat = () => {
-    textInput.current.jsonEditor.format();
-  };
-
   useEffect(() => {
     setHasError(hasErrorProp);
   }, [hasErrorProp]);
+
+  useEffect(() => {
+    if (!isTyping || disabled) {
+      textInput.current.jsonEditor.setText(JSON.stringify(json));
+      textInput.current.jsonEditor.format();
+    }
+  }, [json]);
 
   useEffect(() => {
     const textarea = textInput.current.htmlElementRef.querySelector('.jsoneditor-text');
@@ -71,12 +82,15 @@ export default function EditorPane({label, json, onChange, hasError: hasErrorPro
     }
   }, [disabled]);
 
+  useEffect(() => {
+    if (format) {
+      textInput.current.jsonEditor.format();
+    }
+  }, [format]);
+
   return (
     <Wrap>
-      <Label hasError={hasError}>
-        {label}:{/*<button onClick={onFormat}>onFormat</button>*/}
-      </Label>
-
+      <Label hasError={hasError}>{label}</Label>
       <JSONEditorStyled
         ref={textInput}
         value={json}
@@ -86,6 +100,8 @@ export default function EditorPane({label, json, onChange, hasError: hasErrorPro
         mode="code"
         hasError={hasError}
         onChange={onChangeText}
+        onFocus={onFocus}
+        onBlur={onBlur}
         onError={onError}
       />
     </Wrap>
@@ -98,4 +114,5 @@ EditorPane.propTypes = {
   hasError: PropTypes.bool.isRequired,
   onChange: PropTypes.func,
   disabled: PropTypes.bool,
+  format: PropTypes.bool,
 };

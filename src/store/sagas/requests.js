@@ -8,9 +8,9 @@ export function* requestSendSaga({payload}) {
   const id = new Date().getTime();
   try {
     const response = yield api.sendsay.request(payload);
-    yield put(requestSendSuccess({id, response, name: payload.action, error: false}));
+    yield put(requestSendSuccess({id, response, name: payload.action, request: payload, error: false}));
   } catch (error) {
-    yield put(requestSendSuccess({id, response: error, name: payload.action, error: true}));
+    yield put(requestSendSuccess({id, response: error, name: payload.action, request: payload, error: true}));
     console.error(error);
   }
 }

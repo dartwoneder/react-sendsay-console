@@ -142,6 +142,8 @@ export default class Editor extends Component {
 
     this.jsonEditor = new JSONEditor(this.htmlElementRef, {
       onChange: this.handleChange,
+      onBlur: this.props.onBlur,
+      onFocus: this.props.onFocus,
       onError: this.handleError,
       ...rest,
     });
@@ -223,6 +225,8 @@ Editor.propTypes = {
   schemaRefs: PropTypes.object,
 
   onChange: PropTypes.func,
+  onBlur: PropTypes.func,
+  onFocus: PropTypes.func,
   onError: PropTypes.func,
   onModeChange: PropTypes.func,
 
