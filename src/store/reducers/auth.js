@@ -2,7 +2,7 @@ import {handleActions} from 'redux-actions';
 
 import {ActionTypes} from 'src/store/constants';
 
-export const loginState = {
+export const initialState = {
   loading: false,
   sessionKey: null,
   login: null,
@@ -43,6 +43,6 @@ export default {
         };
       },
     },
-    loginState
+    initialState
   ),
 };

@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {Resizable} from 're-resizable';
 import styled from 'styled-components';
 
@@ -7,6 +7,7 @@ import Footer from 'src/components/Footer';
 import Wrapper from 'src/components/Wrapper';
 import EditorPane from 'src/components/EditorPane';
 import api from 'src/helpers/sendsay';
+import {requestSend} from 'src/store/actions/requests';
 
 const Wrap = styled.div`
   display: flex;
@@ -37,18 +38,12 @@ const ResizableRight = styled.div`
 
 export default function ConsolePage() {
   const dispatch = useDispatch();
-  const [requestBody, setRequestBody] = useState({action: 'track.get', id: '12345'});
+  const [requestBody, setRequestBody] = useState({action: 'sys.settings.get', list: ['about.id']});
+
+  const lastResponse = useSelector((state) => state.requests.history[0]);
 
   const onSendRequest = () => {
-    //sendsay.request({ action: 'sys.settings.get', list: ['about.id']}).then(function(res) {
-    api.sendsay
-      .request({
-        action: 'pong',
-      })
-      .then(function (res) {});
-    api.sendsay.request(requestBody).then(function (res) {
-      console.log(res.list['about.id']);
-    });
+    dispatch(requestSend(requestBody));
   };
 
   return (
@@ -81,7 +76,7 @@ export default function ConsolePage() {
           <EditorPane label="Запрос" json={requestBody} onChange={setRequestBody} />
         </ResizableLeft>
         <ResizableRight>
-          <EditorPane label="Ответ" disabled json={requestBody} />
+          <EditorPane label="Ответ" disabled json={lastResponse} />
         </ResizableRight>
       </Content>
       <Footer

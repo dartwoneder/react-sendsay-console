@@ -9,4 +9,7 @@ export const ActionTypes = keyMirror({
   LOGOUT: undefined,
   LOGOUT_SUCCESS: undefined,
   LOGOUT_FAILURE: undefined,
+  REQUEST_SEND: undefined,
+  REQUEST_SEND_SUCCESS: undefined,
+  REQUEST_SEND_FAILURE: undefined,
 });
