@@ -24,6 +24,15 @@ const HistoryList = styled.div`
   position: absolute;
   overflow: hidden;
 `;
+const Overlay = styled.div`
+  pointer-events: none;
+  position: absolute;
+  width: 15px;
+  height: 49px;
+  right: 50px;
+  top: 0;
+  background: linear-gradient(269.98deg, #f6f6f6 0.06%, rgba(246, 246, 246, 0) 99.93%);
+`;
 
 const ClearHistoryBtn = styled.div`
   position: absolute;
@@ -64,6 +73,7 @@ export default function RequestsHistory({requests, onClick, onClearHistory}) {
           ))}
         </HistoryList>
       </WrapperStyled>
+      <Overlay />
       <ClearHistoryBtn onClick={onClearHistory} />
     </RequstHistoryStyled>
   );
