@@ -10,6 +10,8 @@ const WrapperStyled = styled(Wrapper)`
   height: 50px;
   background: #f6f6f6;
   border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+  position: relative;
+  overflow: hidden;
 `;
 const HistoryList = styled.div`
   display: flex;
@@ -17,22 +19,34 @@ const HistoryList = styled.div`
   height: 100%;
 `;
 
-export default function RequestsHistory() {
+const ClearHistoryBtn = styled.div`
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 50px;
+  height: 50px;
+  background: #f6f6f6;
+  border-left: 1px solid rgba(0, 0, 0, 0.2);
+  background: url('/icons/cross.svg') no-repeat 50% 50%;
+  cursor: pointer;
+`;
+
+export default function RequestsHistory({requests, onClick, onClearHistory}) {
   return (
     <WrapperStyled>
       <HistoryList>
-        {['track.get', 'track.get', 'track.get'].map((item) => (
-          <DropdownPill text={item} />
-        ))}
+        {requests.map((item) => {
+          console.log('e', item);
+          return <DropdownPill key={item.id} text={item.name} onClick={onClick} hasError={item.error} />;
+        })}
       </HistoryList>
+      <ClearHistoryBtn onClick={onClearHistory} />
     </WrapperStyled>
   );
 }
 
 RequestsHistory.propTypes = {
-  text: PropTypes.string.isRequired,
+  requests: PropTypes.array.isRequired,
   onClick: PropTypes.func.isRequired,
-  type: PropTypes.string,
-  disabled: PropTypes.bool,
-  loading: PropTypes.bool,
+  onClearHistory: PropTypes.func.isRequired,
 };

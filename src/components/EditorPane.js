@@ -42,8 +42,8 @@ const JSONEditorStyled = styled(JSONEditor)`
   }
 `;
 
-export default function EditorPane({label, json, onChange, disabled = false}) {
-  const [hasError, setHasError] = useState(false);
+export default function EditorPane({label, json, onChange, hasError: hasErrorProp, disabled = false}) {
+  const [hasError, setHasError] = useState(hasErrorProp);
   const textInput = useRef();
   const onChangeText = (data) => {
     console.log('data', data);
@@ -57,6 +57,10 @@ export default function EditorPane({label, json, onChange, disabled = false}) {
   const onFormat = () => {
     textInput.current.jsonEditor.format();
   };
+
+  useEffect(() => {
+    setHasError(hasErrorProp);
+  }, [hasErrorProp]);
 
   useEffect(() => {
     const textarea = textInput.current.htmlElementRef.querySelector('.jsoneditor-text');
@@ -91,6 +95,7 @@ export default function EditorPane({label, json, onChange, disabled = false}) {
 EditorPane.propTypes = {
   label: PropTypes.string.isRequired,
   json: PropTypes.object.isRequired,
+  hasError: PropTypes.bool.isRequired,
   onChange: PropTypes.func,
   disabled: PropTypes.bool,
 };

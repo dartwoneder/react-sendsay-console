@@ -12,4 +12,5 @@ export const ActionTypes = keyMirror({
   REQUEST_SEND: undefined,
   REQUEST_SEND_SUCCESS: undefined,
   REQUEST_SEND_FAILURE: undefined,
+  REQUEST_REMOVE_ALL: undefined,
 });

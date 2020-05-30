@@ -5,11 +5,12 @@ import {ActionTypes} from 'src/store/constants';
 import {requestSendSuccess, requestSendFailure} from 'src/store/actions/requests';
 
 export function* requestSendSaga({payload}) {
+  const id = new Date().getTime();
   try {
     const response = yield api.sendsay.request(payload);
-    yield put(requestSendSuccess(response));
-    console.log('response', response);
+    yield put(requestSendSuccess({id, response, name: payload.action, error: false}));
   } catch (error) {
+    yield put(requestSendSuccess({id, response: error, name: payload.action, error: true}));
     console.error(error);
   }
 }

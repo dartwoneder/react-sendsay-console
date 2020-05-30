@@ -6,8 +6,7 @@ import styled from 'styled-components';
 import Footer from 'src/components/Footer';
 import Wrapper from 'src/components/Wrapper';
 import EditorPane from 'src/components/EditorPane';
-import api from 'src/helpers/sendsay';
-import {requestSend} from 'src/store/actions/requests';
+import {requestRemoveAll, requestSend} from 'src/store/actions/requests';
 import RequestsHistory from 'src/components/RequestsHistory';
 
 const Wrap = styled.div`
@@ -41,15 +40,24 @@ export default function ConsolePage() {
   const dispatch = useDispatch();
   const [requestBody, setRequestBody] = useState({action: 'sys.settings.get', list: ['about.id']});
 
-  const lastResponse = useSelector((state) => state.requests.history[0]);
+  const requests = useSelector((state) => state.requests.history);
+  const lastResponse = requests[0] || {response: {}};
 
   const onSendRequest = () => {
     dispatch(requestSend(requestBody));
   };
 
+  const onClearHistory = () => {
+    dispatch(requestRemoveAll());
+  };
+
+  const onRequestClick = (requests) => {
+    console.log('requests', requests);
+  };
+
   return (
     <Wrap>
-      <RequestsHistory />
+      <RequestsHistory requests={requests} onClick={onRequestClick} onClearHistory={onClearHistory} />
       <Content>
         <ResizableLeft
           enable={{
@@ -75,10 +83,10 @@ export default function ConsolePage() {
           maxWidth="100%"
           minWidth="1"
         >
-          <EditorPane label="Запрос" json={requestBody} onChange={setRequestBody} />
+          <EditorPane label="Запрос" json={requestBody} onChange={setRequestBody} hasError={false} />
         </ResizableLeft>
         <ResizableRight>
-          <EditorPane label="Ответ" disabled json={lastResponse} />
+          <EditorPane label="Ответ" disabled json={lastResponse?.response} hasError={lastResponse?.error} />
         </ResizableRight>
       </Content>
       <Footer

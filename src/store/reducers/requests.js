@@ -23,6 +23,12 @@ export default {
           history: [payload, ...state.history],
         };
       },
+      [ActionTypes.REQUEST_REMOVE_ALL]: (state) => {
+        return {
+          ...state,
+          history: [],
+        };
+      },
     },
     initialState
   ),

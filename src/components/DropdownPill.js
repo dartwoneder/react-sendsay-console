@@ -33,10 +33,10 @@ const StatusIcons = styled.div`
   border-color: ${(props) => (props.error ? 'rgb(160, 38, 4)' : 'rgb(40, 143, 7)')};
 `;
 
-export default function DropdownPill({text}) {
+export default function DropdownPill({text, hasError, onClick}) {
   return (
-    <Pill>
-      <StatusIcons error />
+    <Pill onClick={onClick}>
+      <StatusIcons error={hasError} />
       {text} <img src="/icons/dots.svg" />
     </Pill>
   );
@@ -44,5 +44,6 @@ export default function DropdownPill({text}) {
 
 DropdownPill.propTypes = {
   text: PropTypes.string.isRequired,
+  hasError: PropTypes.bool.isRequired,
   onClick: PropTypes.func.isRequired,
 };
