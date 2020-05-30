@@ -41,6 +41,11 @@ export default function ConsolePage() {
 
   const onSendRequest = () => {
     //sendsay.request({ action: 'sys.settings.get', list: ['about.id']}).then(function(res) {
+    api.sendsay
+      .request({
+        action: 'pong',
+      })
+      .then(function (res) {});
     api.sendsay.request(requestBody).then(function (res) {
       console.log(res.list['about.id']);
     });

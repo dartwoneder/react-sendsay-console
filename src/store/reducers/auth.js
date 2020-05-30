@@ -27,6 +27,14 @@ export default {
           sublogin: payload.sublogin,
         };
       },
+      [ActionTypes.AUTHENTICATE_FAILURE]: (state) => {
+        return {
+          ...state,
+          sessionKey: null,
+          login: null,
+          sublogin: null,
+        };
+      },
       [ActionTypes.LOGOUT]: (state) => {
         return {
           ...state,
