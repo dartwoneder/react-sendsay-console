@@ -8,6 +8,7 @@ import Wrapper from 'src/components/Wrapper';
 import EditorPane from 'src/components/EditorPane';
 import api from 'src/helpers/sendsay';
 import {requestSend} from 'src/store/actions/requests';
+import RequestsHistory from 'src/components/RequestsHistory';
 
 const Wrap = styled.div`
   display: flex;
@@ -48,6 +49,7 @@ export default function ConsolePage() {
 
   return (
     <Wrap>
+      <RequestsHistory />
       <Content>
         <ResizableLeft
           enable={{
