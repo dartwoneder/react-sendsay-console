@@ -1,9 +1,7 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import {Link} from 'react-router-dom';
-import {useDispatch, useSelector} from 'react-redux';
 
-import {logout} from 'src/store/actions/auth';
 import Button from 'src/components/Button';
 import Wrapper from 'src/components/Wrapper';
 
@@ -27,18 +25,19 @@ const FormatBtn = styled.div`
   align-items: center;
   justify-content: space-between;
   cursor: pointer;
+  user-select: none;
   img {
     margin-right: 10px;
   }
 `;
 
-export default function Footer() {
+export default function Footer({onSendRequest, onFormat}) {
   return (
     <FooterStyled>
       <WrapperStyled>
-        <Button onClick={() => {}} text="Отправить" />
+        <Button onClick={onSendRequest} text="Отправить" />
         <FooterInfo>@link-to-your-github</FooterInfo>
-        <FormatBtn onClick={() => {}}>
+        <FormatBtn onClick={onFormat}>
           <img src="icons/format.svg" />
           Форматировать
         </FormatBtn>
@@ -46,3 +45,8 @@ export default function Footer() {
     </FooterStyled>
   );
 }
+
+Footer.propTypes = {
+  onSendRequest: PropTypes.func.isRequired,
+  onFormat: PropTypes.func.isRequired,
+};

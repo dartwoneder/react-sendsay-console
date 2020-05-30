@@ -36,6 +36,8 @@ const ResizableRight = styled.div`
 export default function ConsolePage() {
   const dispatch = useDispatch();
 
+  const onSendRequest = () => {};
+
   return (
     <Wrap>
       <Content>
@@ -69,7 +71,7 @@ export default function ConsolePage() {
           <EditorPane label="Ответ" disabled />
         </ResizableRight>
       </Content>
-      <Footer>footer</Footer>
+      <Footer onSendRequest={onSendRequest}>footer</Footer>
     </Wrap>
   );
 }
