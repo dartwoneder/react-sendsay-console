@@ -12,6 +12,7 @@
     "jsoneditor": "^9.0.0",
     "jsoneditor-react": "^3.0.0",
     "prop-types": "^15.7.2",
+    "re-resizable": "^6.4.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-loader": "^2.4.7",
