@@ -40,13 +40,14 @@ export default {
         }
         return {
           ...state,
+          loading: false,
           history,
         };
       },
       [ActionTypes.REQUEST_REMOVE_ONE]: (state, {payload}) => {
         return {
           ...state,
-          //history: [],
+          history: state.history.filter((item) => item.id !== payload),
         };
       },
       [ActionTypes.REQUEST_REMOVE_ALL]: (state) => {

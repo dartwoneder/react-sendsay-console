@@ -25,6 +25,7 @@ function App() {
           </Switch>
         </PersistGate>
       </Provider>
+      <div id="dropdownPortal"></div>
     </Router>
   );
 }

@@ -1,7 +1,6 @@
 import keyMirror from 'fbjs/lib/keyMirror';
 
 export const ActionTypes = keyMirror({
-  TEST2: undefined,
   AUTHENTICATE: undefined,
   AUTHENTICATE_CHECK: undefined,
   AUTHENTICATE_SUCCESS: undefined,
@@ -12,5 +11,6 @@ export const ActionTypes = keyMirror({
   REQUEST_SEND: undefined,
   REQUEST_SEND_SUCCESS: undefined,
   REQUEST_SEND_FAILURE: undefined,
+  REQUEST_REMOVE_ONE: undefined,
   REQUEST_REMOVE_ALL: undefined,
 });

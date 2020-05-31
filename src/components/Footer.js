@@ -4,6 +4,7 @@ import styled from 'styled-components';
 
 import Button from 'src/components/Button';
 import Wrapper from 'src/components/Wrapper';
+import TransparentButton from 'src/components/TransaprentButton';
 
 const FooterStyled = styled.footer`
   height: 70px;
@@ -20,26 +21,34 @@ const FooterInfo = styled.div`
   color: #999;
   font-size: 16px;
 `;
-const FormatBtn = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  cursor: pointer;
+const FormatBtn = styled(TransparentButton)`
+  //display: flex;
+  //align-items: center;
+  //justify-content: space-between;
+  //cursor: pointer;
   user-select: none;
-  img {
+
+  svg {
     margin-right: 10px;
   }
 `;
 
-export default function Footer({onSendRequest, onFormat}) {
+export default function Footer({onSendRequest, onFormat, loading}) {
   return (
     <FooterStyled>
       <WrapperStyled>
-        <Button onClick={onSendRequest} text="Отправить" />
+        <Button onClick={onSendRequest} loading={loading} text="Отправить" />
         <FooterInfo>@link-to-your-github</FooterInfo>
         <FormatBtn onClick={onFormat}>
-          <img src="icons/format.svg" />
-          Форматировать
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <g opacity="0.8">
+              <path d="M21 10H7" stroke="#0D0D0D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+              <path d="M11 6H3" stroke="#0D0D0D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+              <path d="M12 14H7" stroke="#0D0D0D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+              <path d="M7 18H3" stroke="#0D0D0D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            </g>
+          </svg>
+          <span>Форматировать</span>
         </FormatBtn>
       </WrapperStyled>
     </FooterStyled>
@@ -49,4 +58,5 @@ export default function Footer({onSendRequest, onFormat}) {
 Footer.propTypes = {
   onSendRequest: PropTypes.func.isRequired,
   onFormat: PropTypes.func.isRequired,
+  loading: PropTypes.bool.isRequired,
 };

@@ -1,6 +1,5 @@
 import React, {useEffect, useRef} from 'react';
 import PropTypes from 'prop-types';
-import Loader from 'react-loader';
 import styled from 'styled-components';
 
 import Wrapper from 'src/components/Wrapper';
@@ -45,7 +44,7 @@ const ClearHistoryBtn = styled.div`
   cursor: pointer;
 `;
 
-export default function RequestsHistory({requests, onClick, onClearHistory}) {
+export default function RequestsHistory({requests, onMakeRequest, onCopy, onRemove, onClearHistory}) {
   const container = useRef();
   const onWheel = (event) => {
     const containerScrollPosition = container.current.scrollLeft;
@@ -69,7 +68,14 @@ export default function RequestsHistory({requests, onClick, onClearHistory}) {
       <WrapperStyled onWheel={onWheel} ref={container}>
         <HistoryList>
           {requests.map((item) => (
-            <DropdownPill key={item.id} text={item.name} onClick={() => onClick(item)} hasError={item.error} />
+            <DropdownPill
+              key={item.id}
+              text={item.name}
+              onMakeRequest={() => onMakeRequest(item)}
+              onCopy={() => onCopy(item)}
+              onRemove={() => onRemove(item)}
+              hasError={item.error}
+            />
           ))}
         </HistoryList>
       </WrapperStyled>
@@ -81,6 +87,8 @@ export default function RequestsHistory({requests, onClick, onClearHistory}) {
 
 RequestsHistory.propTypes = {
   requests: PropTypes.array.isRequired,
-  onClick: PropTypes.func.isRequired,
+  onMakeRequest: PropTypes.func.isRequired,
+  onRemove: PropTypes.func.isRequired,
+  onCopy: PropTypes.func.isRequired,
   onClearHistory: PropTypes.func.isRequired,
 };

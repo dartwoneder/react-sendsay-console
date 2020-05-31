@@ -1,12 +1,13 @@
 import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {Resizable} from 're-resizable';
+import copy from 'copy-to-clipboard';
 import styled from 'styled-components';
 
 import Footer from 'src/components/Footer';
 import Wrapper from 'src/components/Wrapper';
 import EditorPane from 'src/components/EditorPane';
-import {requestRemoveAll, requestSend} from 'src/store/actions/requests';
+import {requestRemoveAll, requestRemoveOne, requestSend} from 'src/store/actions/requests';
 import RequestsHistory from 'src/components/RequestsHistory';
 
 const Wrap = styled.div`
@@ -42,10 +43,8 @@ export default function ConsolePage() {
     action: 'sys.settings.get',
     list: ['about.id'],
   };
-  const requests = useSelector((state) => {
-    console.log('state.requests.history', state.requests.history);
-    return state.requests.history;
-  });
+  const requests = useSelector((state) => state.requests.history);
+  const loading = useSelector((state) => state.requests.loading);
 
   let [format, setFormat] = useState(false);
   let [lastResponse, setLastResponse] = useState(requests[0] || {response: {}, request: defaultRequest});
@@ -64,8 +63,8 @@ export default function ConsolePage() {
     setRequestBody(lastResponse.request);
   }, [lastResponse]);
 
-  const onSendRequest = () => {
-    dispatch(requestSend(requestBody));
+  const onSendRequest = (body = requestBody) => {
+    dispatch(requestSend(body));
   };
 
   const onClearHistory = () => {
@@ -74,6 +73,7 @@ export default function ConsolePage() {
 
   const onRequestClick = (request) => {
     setLastResponse(request);
+    onSendRequest(request.request);
   };
 
   const onFormat = () => {
@@ -81,11 +81,23 @@ export default function ConsolePage() {
     //event loop hack to return format back to false state and trigger formatting
     setTimeout(() => setFormat(false), 0);
   };
-  console.log('lastResponse', lastResponse);
+
+  const onRequestCopy = ({request}) => {
+    copy(JSON.stringify(request));
+  };
+  const onRequestRemove = ({id}) => {
+    dispatch(requestRemoveOne(id));
+  };
 
   return (
     <Wrap>
-      <RequestsHistory requests={requests} onClick={onRequestClick} onClearHistory={onClearHistory} />
+      <RequestsHistory
+        requests={requests}
+        onMakeRequest={onRequestClick}
+        onCopy={onRequestCopy}
+        onRemove={onRequestRemove}
+        onClearHistory={onClearHistory}
+      />
       <Content>
         <ResizableLeft
           enable={{
@@ -117,7 +129,13 @@ export default function ConsolePage() {
           <EditorPane label="Ответ" disabled json={responseBody} hasError={lastResponse?.error} />
         </ResizableRight>
       </Content>
-      <Footer onFormat={onFormat} onSendRequest={onSendRequest} />
+      <Footer
+        loading={loading}
+        onFormat={onFormat}
+        onSendRequest={() => {
+          onSendRequest();
+        }}
+      />
     </Wrap>
   );
 }
