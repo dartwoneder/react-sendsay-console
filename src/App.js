@@ -32,7 +32,7 @@ function App() {
                 <Route path="/login">
                   <LoginPage />
                 </Route>
-                <PrivateRoute path="/console">
+                <PrivateRoute path="/">
                   <ConsolePage />
                 </PrivateRoute>
               </Switch>
