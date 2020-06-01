@@ -98,7 +98,7 @@ export default function Header() {
             <li>
               <UserInfoBtn>
                 {login}
-                <i />
+                {!!sublogin && <i />}
                 {sublogin}
               </UserInfoBtn>
             </li>
