@@ -51,21 +51,22 @@ export default function Dropdown({left, top, width, visible, parentRef, onHide, 
       }
       onHide();
     },
-    [onHide, parentRef]
+    [onHide]
   );
 
   useEffect(() => {
+    debugger;
     if (visible) {
       initialRender.current = false;
       dropdownPortal.appendChild(el.current);
       document.addEventListener('mousedown', clickOutside);
-    } else if (!initialRender.current && initialRender.current) {
+    } else if (!initialRender.current) {
       dropdownPortal.removeChild(el.current);
     }
     return () => {
       document.removeEventListener('mousedown', clickOutside);
     };
-  }, [visible, clickOutside, dropdownPortal]);
+  });
 
   return createPortal(
     <DropDownStyled ref={dropdownRef} left={left} top={top} width={width}>
