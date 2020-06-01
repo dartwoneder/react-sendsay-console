@@ -3,6 +3,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import styled from 'styled-components';
 
 import {logout} from 'src/store/actions/auth';
+import {requestRemoveAll} from 'src/store/actions/requests';
 import {AppContext} from 'src/App';
 import Wrapper from 'src/components/Wrapper';
 import TransaprentButton from 'src/components/TransaprentButton';
@@ -77,7 +78,10 @@ const UserInfoBtn = styled.div`
 
 export default function Header() {
   const dispatch = useDispatch();
-  const doLogout = () => dispatch(logout());
+  const doLogout = () => {
+    dispatch(requestRemoveAll());
+    dispatch(logout());
+  };
   const login = useSelector((state) => state.auth.login);
   const sublogin = useSelector((state) => state.auth.sublogin);
   const appContext = useContext(AppContext);
