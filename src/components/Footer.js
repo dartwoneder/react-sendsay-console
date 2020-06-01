@@ -20,6 +20,14 @@ const FooterInfo = styled.div`
   text-align: center;
   color: #999;
   font-size: 16px;
+  a {
+    color: #999;
+    text-decoration: none;
+    transition: all 0.3s;
+    &:hover {
+      color: #000;
+    }
+  }
 `;
 const FormatBtn = styled(TransparentButton)`
   user-select: none;
@@ -33,7 +41,11 @@ export default function Footer({onSendRequest, onFormat, loading}) {
     <FooterStyled>
       <WrapperStyled>
         <Button onClick={onSendRequest} loading={loading} text="Отправить" />
-        <FooterInfo>@link-to-your-github</FooterInfo>
+        <FooterInfo>
+          <a target="_blank" href="https://github.com/dartwoneder/react-sendsay-console">
+            @on-github
+          </a>
+        </FooterInfo>
         <FormatBtn onClick={onFormat}>
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
             <g opacity="0.8">
