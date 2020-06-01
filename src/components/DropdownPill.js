@@ -1,6 +1,5 @@
-import React, {useCallback, useEffect, useRef, useState} from 'react';
-import {createPortal} from 'react-dom';
-import PropTypes, {func} from 'prop-types';
+import React, {useRef, useState} from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 import DropDown from 'src/components/Dropdown';
@@ -18,9 +17,10 @@ const Pill = styled.div`
   color: #0d0d0d;
   cursor: pointer;
   transition: all 0.3s;
-
+  position: relative;
+  overflow: hidden;
   &:hover {
-    box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.25);
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.25);
   }
 `;
 
@@ -43,7 +43,7 @@ const MoreBtn = styled.div`
   }
 `;
 
-export default function DropdownPill({text, hasError, onMakeRequest, onRemove, onCopy}) {
+export default function DropdownPill({text, hasError, children, onMakeRequest, onRemove, onCopy}) {
   const pillRef = useRef();
   const [isDropDownVisible, setIsDropDownVisible] = useState(false);
   const [boundingClientRect, setBoundingClientRect] = useState({left: 0, top: 0, width: 0});
@@ -66,7 +66,7 @@ export default function DropdownPill({text, hasError, onMakeRequest, onRemove, o
     <>
       <Pill ref={pillRef} onClick={onShowDropDown}>
         <StatusIcons error={hasError} />
-        {text}
+        {text} {children}
         <MoreBtn>
           <img src="/icons/dots.svg" />
           <DropDown
@@ -106,4 +106,5 @@ DropdownPill.propTypes = {
   onMakeRequest: PropTypes.func.isRequired,
   onRemove: PropTypes.func.isRequired,
   onCopy: PropTypes.func.isRequired,
+  children: PropTypes.any.isRequired,
 };

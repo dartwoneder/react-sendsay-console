@@ -51,6 +51,7 @@ export default function ConsolePage() {
 
   const [requestBody, setRequestBody] = useState(lastResponse.request);
   const [responseBody, setResponseBody] = useState(lastResponse.response);
+  const [copiedId, setCopiedId] = useState(null);
 
   useEffect(() => {
     if (requests.length) {
@@ -82,8 +83,11 @@ export default function ConsolePage() {
     setTimeout(() => setFormat(false), 0);
   };
 
-  const onRequestCopy = ({request}) => {
+  const onRequestCopy = ({id, request}) => {
+    console.log(id);
     copy(JSON.stringify(request));
+    setCopiedId(id);
+    setTimeout(() => setCopiedId(null), 1500);
   };
   const onRequestRemove = ({id}) => {
     dispatch(requestRemoveOne(id));
@@ -93,6 +97,7 @@ export default function ConsolePage() {
     <Wrap>
       <RequestsHistory
         requests={requests}
+        copiedId={copiedId}
         onMakeRequest={onRequestClick}
         onCopy={onRequestCopy}
         onRemove={onRequestRemove}
