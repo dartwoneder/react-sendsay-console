@@ -10,7 +10,7 @@ const Wrapper = styled.label`
 const Label = styled.div`
   font-size: 16px;
   line-height: 20px;
-  color: #0d0d0d;
+  color: ${(props) => (props.error ? '#CF2C00' : '#0d0d0d')};
   padding-bottom: 10px;
 `;
 
@@ -20,23 +20,33 @@ const Input = styled.input`
   height: 40px;
   background: #fff;
   border: 1px solid rgba(0, 0, 0, 0.2);
+  color: ${(props) => (props.error ? '#CF2C00' : '#0d0d0d')};
+  border-color: ${(props) => (props.error ? '#CF2C00' : 'rgba(0, 0, 0, 0.2)')};
+  box-shadow: ${(props) => (props.error ? '0px 0px 5px rgba(207, 44, 0, 0.5)' : 'none')};
+
   box-sizing: border-box;
   border-radius: 5px;
   padding-left: 10px;
   padding-right: 10px;
-
+  outline: none;
   font-style: normal;
   font-weight: normal;
   font-size: 18px;
   line-height: 30px;
-  color: #0d0d0d;
+  &:hover {
+    border: 1px solid rgba(0, 0, 0, 0.4);
+  }
+  &:focus {
+    border: 1px solid rgba(0, 0, 0, 0.4);
+    box-shadow: 0px 0px 0px 1px rgba(0, 0, 0, 0.2);
+  }
 `;
 
-export default function LabeledInput({value, label, onChange}) {
+export default function LabeledInput({value, label, error, onChange}) {
   return (
     <Wrapper>
-      <Label>{label}</Label>
-      <Input type="text" value={value} onChange={onChange} />
+      <Label error={error}>{label}</Label>
+      <Input type="text" error={error} value={value} onChange={onChange} />
     </Wrapper>
   );
 }
@@ -44,5 +54,6 @@ export default function LabeledInput({value, label, onChange}) {
 LabeledInput.propTypes = {
   value: PropTypes.string.isRequired,
   label: PropTypes.string,
+  error: PropTypes.bool,
   onChange: PropTypes.func.isRequired,
 };

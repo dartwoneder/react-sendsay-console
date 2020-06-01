@@ -17,27 +17,30 @@ export function* authenticateCheckSaga() {
 }
 
 export function* authenticateSaga({payload}) {
-  yield api.sendsay
-    .login({
+  try {
+    yield api.sendsay.login({
       login: payload.login,
       sublogin: payload.sublogin,
       password: payload.password,
-    })
-    .then(() => {
-      document.cookie = `sendsay_session=${api.sendsay.session}`;
-    })
-    .catch((err) => {
-      document.cookie = '';
-      console.log('err', err);
     });
-
-  yield put(
-    authenticateSuccess({
-      sessionKey: api.sendsay.session,
-      login: payload.login,
-      sublogin: payload.sublogin,
-    })
-  );
+    document.cookie = `sendsay_session=${api.sendsay.session}`;
+    yield put(
+      authenticateSuccess({
+        sessionKey: api.sendsay.session,
+        login: payload.login,
+        sublogin: payload.sublogin,
+      })
+    );
+  } catch (err) {
+    console.log('err', err);
+    document.cookie = '';
+    yield put(
+      authenticateFailure({
+        id: err.id,
+        explain: err.explain,
+      })
+    );
+  }
 }
 
 export function* logoutSaga() {

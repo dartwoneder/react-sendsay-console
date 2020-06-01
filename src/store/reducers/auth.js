@@ -7,6 +7,7 @@ export const initialState = {
   sessionKey: null,
   login: null,
   sublogin: null,
+  error: null,
 };
 
 export default {
@@ -16,6 +17,7 @@ export default {
         return {
           ...state,
           loading: true,
+          error: null,
         };
       },
       [ActionTypes.AUTHENTICATE_SUCCESS]: (state, {payload}) => {
@@ -27,12 +29,15 @@ export default {
           sublogin: payload.sublogin,
         };
       },
-      [ActionTypes.AUTHENTICATE_FAILURE]: (state) => {
+      [ActionTypes.AUTHENTICATE_FAILURE]: (state, {payload}) => {
+        console.log('payloadpayloadpayload', payload);
         return {
           ...state,
-          sessionKey: null,
+          loading: false,
           login: null,
+          sessionKey: null,
           sublogin: null,
+          error: payload,
         };
       },
       [ActionTypes.LOGOUT]: (state) => {

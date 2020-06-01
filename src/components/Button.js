@@ -37,7 +37,7 @@ const ButtonText = styled.span`
 
 export default function Button({type = 'submit', text, disabled, loading, onClick}) {
   return (
-    <ButtonStyled type={type} disabled={disabled} onClick={onClick}>
+    <ButtonStyled type={type} disabled={disabled} onClick={loading ? () => {} : onClick}>
       <ButtonText loading={loading}>{text}</ButtonText>
       <Loader loaded={!loading} color={'#fff'} lines={8} width={3} radius={6} corners={2} scale={0.9} length={6} />
     </ButtonStyled>
@@ -46,7 +46,7 @@ export default function Button({type = 'submit', text, disabled, loading, onClic
 
 Button.propTypes = {
   text: PropTypes.string.isRequired,
-  onClick: PropTypes.func.isRequired,
+  onClick: PropTypes.func,
   type: PropTypes.string,
   disabled: PropTypes.bool,
   loading: PropTypes.bool,

@@ -5,7 +5,6 @@ import {ActionTypes} from 'src/store/constants';
 import {requestSendSuccess, requestSendFailure} from 'src/store/actions/requests';
 
 export function* requestSendSaga({payload}) {
-  debugger;
   const id = new Date().getTime();
   try {
     const response = yield api.sendsay.request(payload);

@@ -10,6 +10,7 @@ const sagaMiddleware = createSagaMiddleware();
 const persistConfig = {
   key: 'root',
   storage,
+  blacklist: ['error', 'loading'],
 };
 
 const bindMiddleware = (middleware) => {
