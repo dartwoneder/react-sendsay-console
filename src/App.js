@@ -1,11 +1,11 @@
-import React, {useState, createContext, Context} from 'react';
+import React, {useState, createContext} from 'react';
 import {Provider} from 'react-redux';
 import {PersistGate} from 'redux-persist/integration/react';
 import Fullscreen from 'react-full-screen';
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 
 import createStore from 'src/store';
-import PrivateRoute from 'src/components/PrivateRoute';
+import PrivateRoute from 'src/containers/PrivateRoute';
 import LoginPage from 'src/containers/LoginPage';
 import ConsolePage from 'src/containers/ConsolePage';
 

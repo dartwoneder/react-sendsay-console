@@ -1,9 +1,7 @@
-import React, {useCallback, useEffect, useRef, useState} from 'react';
+import React, {useCallback, useEffect, useRef} from 'react';
 import {createPortal} from 'react-dom';
-import PropTypes, {func} from 'prop-types';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
-
-import Wrapper from 'src/components/Wrapper';
 
 const DropDownStyled = styled.ul`
   list-style: none;
@@ -39,31 +37,35 @@ const DropDownStyledDivider = styled.li`
   height: 1px;
 `;
 
-export default function Dropdown({item, left, top, width, visible, parentRef, onHide, actions, dangerActions}) {
+export default function Dropdown({left, top, width, visible, parentRef, onHide, actions, dangerActions}) {
   const dropdownPortal = document.getElementById('dropdownPortal');
   const dropdownRef = useRef();
   const el = useRef(document.createElement('div'));
   const initialRender = useRef(true);
-  const clickOutside = useCallback((event) => {
-    const current = dropdownRef.current;
-    const pcurrent = parentRef.current;
-    if (current.contains(event.target) || pcurrent.contains(event.target)) {
-      return;
-    }
-    onHide();
-  });
+  const clickOutside = useCallback(
+    (event) => {
+      const current = dropdownRef.current;
+      const parentCurrent = parentRef.current;
+      if (current.contains(event.target) || parentCurrent.contains(event.target)) {
+        return;
+      }
+      onHide();
+    },
+    [onHide, parentRef]
+  );
+
   useEffect(() => {
     if (visible) {
       initialRender.current = false;
       dropdownPortal.appendChild(el.current);
       document.addEventListener('mousedown', clickOutside);
-    } else if (!initialRender.current) {
+    } else if (!initialRender.current && initialRender.current) {
       dropdownPortal.removeChild(el.current);
     }
     return () => {
       document.removeEventListener('mousedown', clickOutside);
     };
-  }, [visible]);
+  }, [visible, clickOutside, dropdownPortal]);
 
   return createPortal(
     <DropDownStyled ref={dropdownRef} left={left} top={top} width={width}>
@@ -90,7 +92,6 @@ Dropdown.propTypes = {
   top: PropTypes.number.isRequired,
   width: PropTypes.number.isRequired,
   visible: PropTypes.bool.isRequired,
-  item: PropTypes.string.isRequired,
   parentRef: PropTypes.shape({current: PropTypes.instanceOf(Element)}).isRequired,
   onHide: PropTypes.func.isRequired,
   actions: PropTypes.array.isRequired,

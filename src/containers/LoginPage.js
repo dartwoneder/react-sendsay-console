@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {withRouter} from 'react-router-dom';
 import {Form, Field} from 'react-final-form';
@@ -67,7 +67,7 @@ function LoginPage({history}) {
     if (isLoggedIn) {
       history.push('/console');
     }
-  }, [isLoggedIn]);
+  }, [isLoggedIn, history]);
 
   function onSubmit({login, sublogin, password}) {
     if (!loading) {
@@ -133,7 +133,7 @@ function LoginPage({history}) {
               </Field>
 
               <div className="buttons">
-                <Button type="submit" text="Отправить" loading={submitting || loading} disabled={Object.keys(errors).length} />
+                <Button type="submit" text="Отправить" loading={loading || false} disabled={!!Object.keys(errors).length} />
               </div>
             </FormStyled>
           </form>

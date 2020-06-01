@@ -30,7 +30,6 @@ export default {
         };
       },
       [ActionTypes.AUTHENTICATE_FAILURE]: (state, {payload}) => {
-        console.log('payloadpayloadpayload', payload);
         return {
           ...state,
           loading: false,
@@ -45,6 +44,16 @@ export default {
           ...state,
           loading: false,
           sessionKey: null,
+        };
+      },
+      [ActionTypes.LOGOUT_SUCCESS]: (state) => {
+        return {
+          ...state,
+          ...state,
+          loading: false,
+          login: null,
+          sessionKey: null,
+          sublogin: null,
         };
       },
     },

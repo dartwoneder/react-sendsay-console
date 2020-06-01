@@ -71,7 +71,7 @@ export default function EditorPane({label, json, onChange, hasError: hasErrorPro
       textInput.current.jsonEditor.setText(JSON.stringify(json));
       textInput.current.jsonEditor.format();
     }
-  }, [json]);
+  }, [json, disabled, isTyping]);
 
   useEffect(() => {
     const textarea = textInput.current.htmlElementRef.querySelector('.jsoneditor-text');

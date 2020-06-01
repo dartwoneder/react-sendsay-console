@@ -22,12 +22,7 @@ const FooterInfo = styled.div`
   font-size: 16px;
 `;
 const FormatBtn = styled(TransparentButton)`
-  //display: flex;
-  //align-items: center;
-  //justify-content: space-between;
-  //cursor: pointer;
   user-select: none;
-
   svg {
     margin-right: 10px;
   }
@@ -42,10 +37,10 @@ export default function Footer({onSendRequest, onFormat, loading}) {
         <FormatBtn onClick={onFormat}>
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
             <g opacity="0.8">
-              <path d="M21 10H7" stroke="#0D0D0D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-              <path d="M11 6H3" stroke="#0D0D0D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-              <path d="M12 14H7" stroke="#0D0D0D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-              <path d="M7 18H3" stroke="#0D0D0D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+              <path d="M21 10H7" stroke="#0D0D0D" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+              <path d="M11 6H3" stroke="#0D0D0D" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+              <path d="M12 14H7" stroke="#0D0D0D" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+              <path d="M7 18H3" stroke="#0D0D0D" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
             </g>
           </svg>
           <span>Форматировать</span>
@@ -58,5 +53,5 @@ export default function Footer({onSendRequest, onFormat, loading}) {
 Footer.propTypes = {
   onSendRequest: PropTypes.func.isRequired,
   onFormat: PropTypes.func.isRequired,
-  loading: PropTypes.bool.isRequired,
+  loading: PropTypes.bool,
 };

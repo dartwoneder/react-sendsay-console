@@ -68,7 +68,7 @@ export default function DropdownPill({text, hasError, children, onMakeRequest, o
         <StatusIcons error={hasError} />
         {text} {children}
         <MoreBtn>
-          <img src="/icons/dots.svg" />
+          <img src="/icons/dots.svg" alt="" />
           <DropDown
             actions={[
               {

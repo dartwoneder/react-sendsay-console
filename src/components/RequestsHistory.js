@@ -1,7 +1,6 @@
 import React, {useEffect, useRef} from 'react';
 import PropTypes from 'prop-types';
 import {Transition} from 'react-transition-group';
-
 import styled from 'styled-components';
 
 import Wrapper from 'src/components/Wrapper';
@@ -128,9 +127,9 @@ export default function RequestsHistory({requests, onMakeRequest, onCopy, onRemo
 
 RequestsHistory.propTypes = {
   requests: PropTypes.array.isRequired,
-  copiedId: PropTypes.number.isRequired,
   onMakeRequest: PropTypes.func.isRequired,
   onRemove: PropTypes.func.isRequired,
   onCopy: PropTypes.func.isRequired,
   onClearHistory: PropTypes.func.isRequired,
+  copiedId: PropTypes.number,
 };

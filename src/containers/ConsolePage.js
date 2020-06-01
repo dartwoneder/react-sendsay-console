@@ -4,10 +4,10 @@ import {Resizable} from 're-resizable';
 import copy from 'copy-to-clipboard';
 import styled from 'styled-components';
 
+import {requestRemoveAll, requestRemoveOne, requestSend} from 'src/store/actions/requests';
 import Footer from 'src/components/Footer';
 import Wrapper from 'src/components/Wrapper';
 import EditorPane from 'src/components/EditorPane';
-import {requestRemoveAll, requestRemoveOne, requestSend} from 'src/store/actions/requests';
 import RequestsHistory from 'src/components/RequestsHistory';
 
 const Wrap = styled.div`
@@ -79,12 +79,11 @@ export default function ConsolePage() {
 
   const onFormat = () => {
     setFormat(true);
-    //event loop hack to return format back to false state and trigger formatting
+    // event loop hack to return format back to false state and trigger formatting
     setTimeout(() => setFormat(false), 0);
   };
 
   const onRequestCopy = ({id, request}) => {
-    console.log(id);
     copy(JSON.stringify(request));
     setCopiedId(id);
     setTimeout(() => setCopiedId(null), 1500);
@@ -125,8 +124,9 @@ export default function ConsolePage() {
               background: "url('/icons/dots.svg') no-repeat 50% 50%",
             },
           }}
-          maxWidth="100%"
-          minWidth="1"
+          maxWidth="calc(100% - 400px)"
+          minWidth="400"
+          minHeight="400"
         >
           <EditorPane label="Запрос" json={requestBody} onChange={setRequestBody} format={format} hasError={false} />
         </ResizableLeft>

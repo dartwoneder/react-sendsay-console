@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Loader from 'react-loader';
 import styled from 'styled-components';
 
 const ButtonStyled = styled.div`

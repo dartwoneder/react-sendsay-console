@@ -46,10 +46,6 @@ const LogoutBtn = styled.span`
   }
 `;
 
-const FullScreenBtn = styled.img`
-  cursor: pointer;
-`;
-
 const UserInfoBtn = styled.div`
   cursor: pointer;
   border: 1px solid rgba(0, 0, 0, 0.2);
