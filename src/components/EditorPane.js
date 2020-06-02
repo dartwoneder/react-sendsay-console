@@ -48,7 +48,6 @@ export default function EditorPane({label, json, onChange, hasError: hasErrorPro
   const textInput = useRef();
   const onBlur = () => {
     setIsTyping(false);
-    console.log('isTyping onBlur', isTyping);
   };
   const onFocus = () => {
     setIsTyping(true);

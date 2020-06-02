@@ -55,7 +55,6 @@ export default function Dropdown({left, top, width, visible, parentRef, onHide, 
   );
 
   useEffect(() => {
-    debugger;
     if (visible) {
       initialRender.current = false;
       dropdownPortal.appendChild(el.current);
