@@ -65,7 +65,7 @@ export default function Dropdown({left, top, width, visible, parentRef, onHide, 
     return () => {
       document.removeEventListener('mousedown', clickOutside);
     };
-  });
+  }, [visible]);
 
   return createPortal(
     <DropDownStyled ref={dropdownRef} left={left} top={top} width={width}>
